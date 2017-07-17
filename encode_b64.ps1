@@ -33,3 +33,18 @@ $base64string | set-content $b64file
 #decode
 $BinFromB64 = $InBin + ".fromb64"
 [IO.File]::WriteAllBytes($BinFromB64, [System.Convert]::FromBase64String($base64string))
+
+### Validate if Base64 encoded
+$re = "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$"
+# ^([A-Za-z0-9+/]{4})* means the string starts with 0 or more base64 groups.
+# ([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$ means the string ends in one of three forms: [A-Za-z0-9+/]{4}, [A-Za-z0-9+/]{3}= or [A-Za-z0-9+/]{2}==.
+
+$base64 -match $re
+
+If ($base64 –notmatch $re) {
+  Write-Error "Invalid input."
+}
+
+If ($base64 –match $re) {
+  Write-Host "Good match."
+}
