@@ -18,6 +18,10 @@ $fileContentBytes = [System.Text.Encoding]::UTF8.GetBytes($fileContent)
 $fileContentEncoded = [System.Convert]::ToBase64String($fileContentBytes)
 $fileContentEncoded | set-content ($fileName + ".b64fortxt")
 
+# decode
+####### TODO
+
+
 ### Base64 - bin file / png
 # encode
 $InBin = "C:\wk_tmp\abc.exe"
@@ -28,4 +32,4 @@ $base64string | set-content $b64file
 
 #decode
 $BinFromB64 = $InBin + ".fromb64"
-[IO.File]::WriteAllBytes($BinFromB64 + "", [System.Convert]::FromBase64String($base64string))
+[IO.File]::WriteAllBytes($BinFromB64, [System.Convert]::FromBase64String($base64string))
